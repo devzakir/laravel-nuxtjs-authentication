@@ -33,10 +33,36 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/auth-next'
   ],
 
+  // nuxt auth package configuration
+  auth: {
+    // Options
+    strategies: {
+        local: {
+            token: {
+                property: 'token',
+                // required: true,
+                // type: 'Bearer'
+            },
+            user: {
+                property: 'user',
+                // autoFetch: true
+            },
+            endpoints: {
+                login: { url: '/auth/login', method: 'post' },
+                logout: { url: '/auth/logout', method: 'post' },
+                user: { url: '/auth/me', method: 'post' }
+            }
+        }
+    }
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http://127.0.0.1:8000/api'
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
