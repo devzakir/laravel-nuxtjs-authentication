@@ -36,28 +36,34 @@ export default {
     '@nuxtjs/auth-next'
   ],
 
-  // nuxt auth package configuration
-  auth: {
-    // Options
-    strategies: {
-        local: {
-            token: {
-                property: 'token',
-                // required: true,
-                // type: 'Bearer'
-            },
-            user: {
-                property: 'user',
-                // autoFetch: true
-            },
-            endpoints: {
-                login: { url: '/auth/login', method: 'post' },
-                logout: { url: '/auth/logout', method: 'post' },
-                user: { url: '/auth/me', method: 'post' }
+    // nuxt auth package configuration
+    auth: {
+        // Options
+        strategies: {
+            local: {
+                token: {
+                    property: 'access_token',
+                    // required: true,
+                    // type: 'Bearer'
+                },
+                user: {
+                    property: false,
+                    // autoFetch: true
+                },
+                endpoints: {
+                    login: { url: '/auth/login', method: 'post' },
+                    logout: { url: '/auth/logout', method: 'post' },
+                    user: { url: '/auth/me', method: 'post' }
+                }
             }
+        },
+        redirect: {
+            login: '/login',
+            logout: '/',
+            callback: '/login',
+            home: '/'
         }
-    }
-  },
+    },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {

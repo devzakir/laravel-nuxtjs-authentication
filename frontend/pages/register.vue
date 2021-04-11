@@ -6,18 +6,18 @@
                     Create an account
                 </div>
                 <div class="card-body">
-                    <form action="" @submit.prevent="userLogin">
+                    <form action="" @submit.prevent="registerUser">
                         <div class="form-group mb-3">
                             <label for="">Your name </label>
-                            <input type="text" class="form-control" name="email" placeholder="Enter email">
+                            <input type="text" v-model="registerForm.name" class="form-control" name="email" placeholder="Enter email">
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Your email </label>
-                            <input type="text" class="form-control" name="email" placeholder="Enter email">
+                            <input type="text" v-model="registerForm.email" class="form-control" name="email" placeholder="Enter email">
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Your Password</label>
-                            <input type="password" class="form-control" name="passwrd" placeholder="Enter password">
+                            <input type="password" v-model="registerForm.password" class="form-control" name="passwrd" placeholder="Enter password">
                         </div>
                         <div class="form-group d-flex justify-content-between align-items-center">
                             <button type="submit" class="btn btn-success">Create an account</button>
@@ -32,20 +32,22 @@
 
 <script>
 export default {
+    auth: 'guest',
     data(){
         return {
-            login: {
-                email: 'web.zakirbd@gmail.com',
-                password: 'password',
+            registerForm: {
+                name: '',
+                email: '',
+                password: '',
             }
         }
     },
     methods: {
-        async userLogin() {
+        async registerUser() {
             try {
-                let response = await this.$auth.loginWith('local', { data: this.login });
+                // let response = ;
 
-                console.log(response)
+                // console.log(response)
             } catch (err) {
                 console.log(err)
             }
