@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,8 +15,25 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
+
+    /**
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string',
+        ]);
+    }
+
 
     /**
      * Get a JWT token via given credentials.
@@ -26,13 +44,45 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $this->validateLogin($request);
+        $credentials = request(['email', 'password']);
 
-        if ($token = auth()->guard('api')->attempt($credentials)) {
-            return $this->respondWithToken($token);
+        if (!$token = auth('api')->attempt($credentials)) {
+            return response()->json([
+                'errors' => [
+                    'account' => [
+                        "Invalid phone number or password"
+                    ]
+                ]
+            ], 422);
         }
 
-        return response()->json(['error' => 'Unauthorized'], 401);
+        return $this->respondWithToken($token);
+    }
+    /**
+     * Get a JWT token for registered user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|unique:users,email',
+            'password' => 'required|min:6'
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        // Get the token
+        $token = auth('api')->login($user);
+        return $this->respondWithToken($token);
     }
 
     /**

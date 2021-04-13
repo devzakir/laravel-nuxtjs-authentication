@@ -6,18 +6,21 @@
                     Create an account
                 </div>
                 <div class="card-body">
-                    <form action="" @submit.prevent="registerUser">
+                    <form action="" @submit.prevent="registerUser" @keydown="registerUser.onKeydown($event)">
                         <div class="form-group mb-3">
                             <label for="">Your name </label>
-                            <input type="text" v-model="registerForm.name" class="form-control" name="email" placeholder="Enter email">
+                            <input type="text" v-model="registerForm.name" class="form-control" name="name" placeholder="Enter email" :class="{ 'is-invalid': registerForm.errors.has('name') }">
+                            <has-error :form="registerForm" field="name"></has-error>
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Your email </label>
-                            <input type="text" v-model="registerForm.email" class="form-control" name="email" placeholder="Enter email">
+                            <input type="text" v-model="registerForm.email" class="form-control" name="email" placeholder="Enter email" :class="{ 'is-invalid': registerForm.errors.has('email') }">
+                            <has-error :form="registerForm" field="email"></has-error>
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Your Password</label>
-                            <input type="password" v-model="registerForm.password" class="form-control" name="passwrd" placeholder="Enter password">
+                            <input type="password" v-model="registerForm.password" class="form-control" name="password" placeholder="Enter password" :class="{ 'is-invalid': registerForm.errors.has('password') }">
+                            <has-error :form="registerForm" field="password"></has-error>
                         </div>
                         <div class="form-group d-flex justify-content-between align-items-center">
                             <button type="submit" class="btn btn-success">Create an account</button>
@@ -35,19 +38,19 @@ export default {
     auth: 'guest',
     data(){
         return {
-            registerForm: {
+            registerForm: this.$vform({
                 name: '',
                 email: '',
                 password: '',
-            }
+            }),
         }
     },
     methods: {
         async registerUser() {
             try {
-                // let response = ;
+                let data = await this.registerForm.post('/auth/register');
 
-                // console.log(response)
+                await this.$auth.setUserToken(data.access_token);
             } catch (err) {
                 console.log(err)
             }

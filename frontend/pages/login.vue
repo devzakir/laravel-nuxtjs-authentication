@@ -6,14 +6,19 @@
                     Login Page
                 </div>
                 <div class="card-body">
-                    <form action="" @submit.prevent="userLogin">
+                    <div class="alert alert-danger" v-if="loginForm.errors.errors.account">
+                        {{ loginForm.errors.errors.account[0] }}
+                    </div>
+                    <form action="" @submit.prevent="userLogin" @keydown="loginForm.onKeydown($event)">
                         <div class="form-group mb-3">
                             <label for="">Enter Email </label>
-                            <input type="text" v-model="login.email" class="form-control" name="email" placeholder="Enter email">
+                            <input type="text" v-model="loginForm.email" class="form-control" name="email" placeholder="Enter email" :class="{ 'is-invalid': loginForm.errors.has('email') }">
+                            <has-error :form="loginForm" field="email"></has-error>
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Enter Password</label>
-                            <input type="password" v-model="login.password" class="form-control" name="passwrd" placeholder="Enter password">
+                            <input type="password" v-model="loginForm.password" class="form-control" name="passwrd" placeholder="Enter password" :class="{ 'is-invalid': loginForm.errors.has('password') }">
+                            <has-error :form="loginForm" field="password"></has-error>
                         </div>
                         <div class="form-group d-flex justify-content-between align-items-center">
                             <button type="submit" class="btn btn-success">Give me Access</button>
@@ -31,18 +36,17 @@ export default {
     auth: 'guest',
     data(){
         return {
-            login: {
+            loginForm: this.$vform({
                 email: 'web.zakirbd@gmail.com',
                 password: 'password',
-            }
+            }),
         }
     },
     methods: {
         async userLogin() {
             try {
-                let response = await this.$auth.loginWith('local', { data: this.login });
-
-                console.log(response)
+                let { data } = await this.loginForm.post('/auth/login');
+                await this.$auth.setUserToken(data.access_token);
             } catch (err) {
                 console.log(err)
             }
