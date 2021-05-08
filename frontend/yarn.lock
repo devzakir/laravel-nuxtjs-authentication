@@ -2911,6 +2911,13 @@ cuint@^0.2.2:
   resolved "https://registry.yarnpkg.com/cuint/-/cuint-0.2.2.tgz#408086d409550c2631155619e9fa7bcadc3b991b"
   integrity sha1-QICG1AlVDCYxFVYZ6fp7ytw7mRs=
 
+cxlt-vue2-toastr@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/cxlt-vue2-toastr/-/cxlt-vue2-toastr-1.1.1.tgz#9afe18478bf0373c1444a45324a5887f6d1aaf25"
+  integrity sha512-74h+e1zOs3/JqcJPeGYFcmQ9oFRLz/sFUXaeDt4o0K7dyxwTnCJUpELedrNbsgogJ0bA6jBGoKMgX4DS9hIxAw==
+  dependencies:
+    vue "^2.2.2"
+
 cyclist@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
@@ -7787,7 +7794,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.6.12:
+vue@^2.2.2, vue@^2.6.12:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==

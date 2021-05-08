@@ -12,9 +12,10 @@
     "@nuxtjs/auth-next": "5.0.0-1617968180.f699074",
     "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/pwa": "^3.3.5",
-    "core-js": "^3.9.1",
-    "nuxt": "^2.15.3",
     "axios": "^0.21.1",
+    "core-js": "^3.9.1",
+    "cxlt-vue2-toastr": "^1.1.1",
+    "nuxt": "^2.15.3",
     "vform": "^1.0.1"
   },
   "devDependencies": {}

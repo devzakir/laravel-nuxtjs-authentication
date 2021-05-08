@@ -16,7 +16,7 @@
               <nuxt-link class="nav-link" v-if="!loggedIn" :to="{ name: 'register' }">Register</nuxt-link>
             </li>
             <li class="nav-item">
-              <nuxt-link class="nav-link" v-if="loggedIn" :to="{ name: 'dashboard' }">dashboard</nuxt-link>
+              <nuxt-link class="nav-link" v-if="loggedIn" :to="{ name: 'dashboard' }">{{ user.name }}</nuxt-link>
             </li>
           </ul>
         </div>
@@ -34,6 +34,9 @@ export default {
     computed: {
         loggedIn(){
             return this.$store.state.auth.loggedIn;
+        },
+        user(){
+            return this.$store.state.auth.user;
         },
     }
 }

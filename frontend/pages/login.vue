@@ -9,7 +9,7 @@
                     <div class="alert alert-danger" v-if="loginForm.errors.errors.account">
                         {{ loginForm.errors.errors.account[0] }}
                     </div>
-                    <form action="" @submit.prevent="userLogin" @keydown="loginForm.onKeydown($event)">
+                    <form @submit.prevent="userLogin" @keydown="loginForm.onKeydown($event)">
                         <div class="form-group mb-3">
                             <label for="">Enter Email </label>
                             <input type="text" v-model="loginForm.email" class="form-control" name="email" placeholder="Enter email" :class="{ 'is-invalid': loginForm.errors.has('email') }">
@@ -21,7 +21,7 @@
                             <has-error :form="loginForm" field="password"></has-error>
                         </div>
                         <div class="form-group d-flex justify-content-between align-items-center">
-                            <button type="submit" class="btn btn-success">Give me Access</button>
+                            <button :disabled="loginForm.busy" type="submit" class="btn btn-success">Give me Access</button>
                             <nuxt-link :to="{ name: 'register' }">Don't have account?</nuxt-link>
                         </div>
                     </form>
@@ -47,6 +47,11 @@ export default {
             try {
                 let { data } = await this.loginForm.post('/auth/login');
                 await this.$auth.setUserToken(data.access_token);
+
+                this.$toast.success({
+                    title: 'Success!',
+                    message: 'Welcome to our app',
+                })
             } catch (err) {
                 console.log(err)
             }

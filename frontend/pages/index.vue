@@ -10,8 +10,8 @@
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, odit? Quibusdam exercitationem veritatis eveniet, animi fuga fugiat maxime similique. Maiores itaque corrupti nulla blanditiis repellat voluptas iure at enim nobis?
               </div>
               <div class="text-center">
-                  <button class="btn btn-primary">Go to Dashboard</button>
-                  <button class="btn btn-success">Sign Up</button>
+                  <nuxt-link :to="{ name: 'dashboard' }" class="btn btn-primary">Go to Dashboard</nuxt-link>
+                  <nuxt-link :to="{ name: 'register' }" class="btn btn-success">Sign Up</nuxt-link>
               </div>
           </div>
       </div>

@@ -6,7 +6,7 @@
                     Create an account
                 </div>
                 <div class="card-body">
-                    <form action="" @submit.prevent="registerUser" @keydown="registerUser.onKeydown($event)">
+                    <form @submit.prevent="registerUser">
                         <div class="form-group mb-3">
                             <label for="">Your name </label>
                             <input type="text" v-model="registerForm.name" class="form-control" name="name" placeholder="Enter email" :class="{ 'is-invalid': registerForm.errors.has('name') }">
@@ -51,6 +51,11 @@ export default {
                 let data = await this.registerForm.post('/auth/register');
 
                 await this.$auth.setUserToken(data.access_token);
+                
+                this.$toast.success({
+                    title: 'Success!',
+                    message: 'Registration Successful',
+                })
             } catch (err) {
                 console.log(err)
             }
