@@ -50,13 +50,15 @@ export default {
     methods: {
         async sendPasswordResetEmail() {
             try {
-                let { data } = await this.resetPassword.post('/auth/password/reset');
+                await this.resetPassword.post('/auth/password/reset');
 
                 this.$toast.success({
                     title: 'Success!',
-                    message: 'Welcome to our app',
+                    message: 'Password updated successfully',
                 });
+
                 this.$router.push({name: 'login'})
+                this.resetPassword.reset();
             } catch (err) {
                 console.log(err)
             }

@@ -55,6 +55,8 @@ export default {
                     title: 'Success!',
                     message: 'Welcome to our app',
                 })
+                
+                this.loginForm.reset();
             } catch (err) {
                 console.log(err)
             }

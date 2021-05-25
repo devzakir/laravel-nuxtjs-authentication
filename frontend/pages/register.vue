@@ -55,7 +55,9 @@ export default {
                 this.$toast.success({
                     title: 'Success!',
                     message: 'Registration Successful',
-                })
+                });
+                
+                this.registerForm.reset();
             } catch (err) {
                 console.log(err)
             }

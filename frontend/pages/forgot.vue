@@ -41,7 +41,7 @@ export default {
 
                 this.$toast.success({
                     title: 'Success!',
-                    message: 'Welcome to our app',
+                    message: 'Reset password email has been sent',
                 })
             } catch (err) {
                 console.log(err)

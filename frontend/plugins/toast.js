@@ -4,7 +4,6 @@ import 'cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css'
 
 var toastrConfigs = {
     position: 'top right',
-    showDuration: 5000
 }
 
 Vue.use(CxltToastr, toastrConfigs)
