@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Transformers\Json;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
 {
@@ -21,49 +21,39 @@ class ForgotPasswordController extends Controller
     |
     */
 
-    use SendsPasswordResetEmails;
-
-
     /**
-     * Get the response for a successful password reset link.
+     * Handle an incoming password reset link request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
-     */
-    protected function sendResetLinkResponse(Request $request, $response)
-    {
-        return response()->json(['success' => trans($response)], 200);
-    }
-
-    /**
-     * Get the response for a failed password reset link.
+     * @return \Illuminate\Http\RedirectResponse
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    protected function sendResetLinkFailedResponse(Request $request, $response)
+    public function sendPasswordResetEmail(Request $request)
     {
-        return response()->json(['error' => trans($response)], 422);
-    }
+        $request->validate([
+            'email' => 'required|email',
+        ]);
 
-    /**
-     * Send a reset link to the given user.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function getResetToken(Request $request)
-    {
-        $this->validate($request, ['email' => 'required|email']);
-        if ($request->wantsJson()) {
-            $user = User::where('email', $request->input('email'))->first();
-            if (!$user) {
-                return response()->json(Json::response(null, trans('passwords.user')), 400);
-            }
-            $token = $this->broker()->createToken($user);
-            return response()->json(Json::response(['token' => $token]));
-        }
+        // We will send the password reset link to this user. Once we have attempted
+        // to send the link, we will examine the response then see the message we
+        // need to show to the user. Finally, we'll send out a proper response.
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status == Password::RESET_LINK_SENT
+            ? response()->json([
+                'success' => true,
+                'status' => ($status)
+            ], 200)
+            : response()->json([
+                'success' => true,
+                'status' => ($status),
+                'email' => $request->only('email'),
+                'errors' => [
+                    'email' => __($status)
+                ]
+            ], 422);
     }
 }

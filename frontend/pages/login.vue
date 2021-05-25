@@ -24,6 +24,9 @@
                             <button :disabled="loginForm.busy" type="submit" class="btn btn-success">Give me Access</button>
                             <nuxt-link :to="{ name: 'register' }">Don't have account?</nuxt-link>
                         </div>
+                        <div class="mt-3">
+                            <nuxt-link :to="{ name: 'forgot' }">Forgot Password? </nuxt-link>
+                        </div>
                     </form>
                 </div>
             </div>
